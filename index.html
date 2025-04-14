@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhereWork - Controle seu local de trabalho</title>
+    <style>
+        :root {
+            --primary-color: #0073E6;
+            --primary-light: #E5F1FF;
+            --secondary-color: #2B4C7E;
+            --accent-color: #1E88E5;
+            --background-light: #FFFFFF;
+            --text-primary: #2B4C7E;
+            --text-secondary: #4A4A4A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-light);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin: 40px 0;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin: 30px 0 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .feature-section {
+            margin: 40px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .feature-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            background: var(--primary-light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+
+        .feature-item p {
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .image-grid .feature-item {
+            text-align: left;
+        }
+
+        .image-grid img {
+            max-width: 90%;
+            display: block;
+            margin: 10px auto;
+            background: var(--primary-light);
+            padding: 15px;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(to right, var(--primary-light), #E5F1FF);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .hero-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-section p {
+            max-width: 600px;
+            margin: 20px auto;
+            font-size: 1.2em;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dark-mode-preview {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .dark-mode-preview img {
+            background: #1a1a1a;
+            border: 1px solid #333;
+        }
+
+        .config-image, .status-image {
+            max-width: 50%;
+            display: block;
+            margin: 10px auto;
+            background: var(--primary-light);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        ul {
+            padding-left: 25px;
+            margin: 15px 0;
+            list-style: none;
+            text-align: left;
+        }
+
+        li {
+            margin: 12px 0;
+            position: relative;
+            padding-left: 28px;
+            text-align: left;
+        }
+
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        li:after {
+            content: "→";
+            color: white;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        footer .app-logo {
+            width: 48px;
+            height: 48px;
+        }
+
+        .app-logo {
+            width: 64px;
+            height: 64px;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            flex-shrink: 0; /* Impede o ícone de encolher */
+        }
+
+        .header-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: flex-start;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            height: 64px; /* Mesma altura do ícone */
+            line-height: 64px;
+        }
+
+        .logo-text-where {
+            color: #3d82c6;
+        }
+
+        .logo-text-work {
+            color: #259842;
+        }
+
+        .app-title {
+            font-size: 36px;
+            color: var(--secondary-color);
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .ipad-preview {
+            margin: 60px auto;
+            max-width: 1000px;
+        }
+
+        .ipad-hero-image {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="header-logo">
+            <div class="logo-container">
+                <img src="appIcon-WhereWork-3.png" alt="WhereWork App Icon" class="app-logo">
+                <span class="logo-text">
+                    <span class="logo-text-where">Where</span><span class="logo-text-work">Work</span>
+                </span>
+            </div>
+            <h1 class="app-title">Política de Privacidade</h1>
+        </div>
+        <p>Última atualização: 14 de abril de 2025</p>
+    </div>
+
+    <section class="feature-section">
+        <div class="feature-item">
+            <h2>Compromisso com sua Privacidade</h2>
+            <p>O WhereWork foi desenvolvido com o princípio fundamental de respeito à sua privacidade. Nossa aplicação funciona completamente offline e não coleta nenhum dado pessoal dos usuários.</p>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <h2>Dados e Armazenamento</h2>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <h3>Armazenamento Local</h3>
+                <p>Todos os seus dados são armazenados exclusivamente no seu dispositivo e sincronizado com sua conta do iCloud. Isso inclui:</p>
+                <ul>
+                    <li>Registros de dias de trabalho</li>
+                    <li>Configurações pessoais</li>
+                    <li>Preferências do aplicativo</li>
+                </ul>
+            </div>
+            <div class="feature-item">
+                <h3>Sem Coleta de Dados</h3>
+                <p>O WhereWork:</p>
+                <ul>
+                    <li>Não coleta dados pessoais</li>
+                    <li>Não utiliza análise de uso</li>
+                    <li>Não rastreia sua localização</li>
+                    <li>Não acessa outros dados do dispositivo</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <h2>Permissões do Aplicativo</h2>
+        <div class="feature-item">
+            <p>O WhereWork não requer nenhuma permissão especial do seu dispositivo para funcionar. Você mantém controle total sobre seus dados e pode excluí-los a qualquer momento desinstalando o aplicativo.</p>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <h2>Contato</h2>
+        <div class="feature-item">
+            <p>Se você tiver dúvidas sobre nossa política de privacidade, entre em contato conosco através do canal de suporte na App Store.</p>
+        </div>
+    </section>
+
+    <footer>
+        <img src="appIcon-WhereWork-3.png" alt="WhereWork App Icon" class="app-logo">
+        <p>WhereWork - Sua privacidade em primeiro lugar</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.feature-section, .hero-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Desativa a observação após o elemento ter aparecido
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2, // O elemento será animado quando 20% dele estiver visível
+                rootMargin: '0px 0px -50px 0px' // Ajusta a margem de detecção
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Adiciona classe visible para a primeira seção imediatamente
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                setTimeout(() => {
+                    heroSection.classList.add('visible');
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
